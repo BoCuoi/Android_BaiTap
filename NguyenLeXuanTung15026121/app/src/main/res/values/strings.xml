@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NguyenLeXuanTung 15026121</string>
+    <string-array name="like_array">
+        <item>Bong tro</item>
+        <item>Bong chay</item>
+        <item>Bong da</item>
+        <item>Bong bau duc</item>
+        <item>Bong nem</item>
+    </string-array>
+</resources>

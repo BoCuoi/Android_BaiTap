@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ListView App</string>
+    <string-array name="presidents_array">
+        <item>
+            Xuan Tung
+        </item>
+        <item>
+            Minh Thang
+        </item>
+        <item>
+            Vinh Toan
+        </item>
+        <item>
+            Minh Thien
+        </item>
+        <item>
+            Nhat Nam
+        </item>
+
+    </string-array>
+</resources>
