@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -12,12 +13,12 @@ import java.util.List;
 
 
 public class MyDialog extends DialogFragment {
-
     private List<String> mSelectedItems;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mSelectedItems = new ArrayList<>();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Chon so thich");
         builder.setMultiChoiceItems(R.array.like_array, null, new DialogInterface.OnMultiChoiceClickListener() {
@@ -39,7 +40,7 @@ public class MyDialog extends DialogFragment {
                 for (String item : mSelectedItems) {
                     final_select = final_select + "\n" + item;
                 }
-
+                ((MainActivity)getActivity()).tvResult.setText(final_select);
             }
         });
         builder.setNegativeButton("Huy", new DialogInterface.OnClickListener() {

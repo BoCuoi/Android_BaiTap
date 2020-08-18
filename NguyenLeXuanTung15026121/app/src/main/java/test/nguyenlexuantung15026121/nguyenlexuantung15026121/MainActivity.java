@@ -1,24 +1,22 @@
 package test.nguyenlexuantung15026121.nguyenlexuantung15026121;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.CharacterPickerDialog;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     TextView tvResult;
     Button btnInfo, btnLike;
-    MyDialog mydialog;
-
-    private List<String> mSelectedItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +26,6 @@ public class MainActivity extends AppCompatActivity {
         btnInfo = (Button) findViewById(R.id.btn_info);
         btnLike = (Button) findViewById(R.id.btn_like);
 
-//        mydialog = new Dialog(this);
-//        mydialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        mydialog.setContentView();
-//        mydialog.show();
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,10 +33,44 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 9999);
             }
         });
+
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(this);
+        mydialog.setTitle("Message");
+        final String[] items = getResources().getStringArray(R.array.like_array);
+        final boolean[] arraycheck = {false, false, false, false, false};
+
+        mydialog.setMultiChoiceItems(items, arraycheck, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                arraycheck[i] = b;
+            }
+        });
+
+        mydialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String st = "";
+                for (int j = 0; j < items.length; j++)
+                    if (arraycheck[j])
+                        st += items[j].toString() + "\n";
+                    tvResult.setText(st);
+            }
+        });
+        AlertDialog alertDialog = mydialog.create();
+        alertDialog.show();
+
+
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mydialog = new MyDialog();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                DialogFragment dialogFragment = new MyDialog();
+                dialogFragment.show(ft, "dialog");
 
             }
         });
